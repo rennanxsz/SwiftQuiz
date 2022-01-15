@@ -45,12 +45,20 @@ class QuizViewController: UIViewController {
     }
     
     func showResults() {
-        
+        performSegue(withIdentifier: "resultSegue", sender: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let resultViewController = segue.destination as!
+            ResultViewController
+        resultViewController.totalAnswers = quizManager.totalAnswers
+        resultViewController.totalCorrectAnswers = quizManager.totalCorrectAnswers
+    }
 
     @IBAction func selectAnswer(_ sender: UIButton) {
-        
+        let index = btAnswers.firstIndex(of: sender)!
+        quizManager.validateAnswer(index: index)
+        getNewQuiz()
     }
     
 }
